@@ -1,0 +1,56 @@
+#head-container {
+    margin-top: 1%;
+}
+
+#head {
+    text-align: center;
+    background-color: grey;
+    color: white;
+    padding: 2%;
+    font-family: 'Metrophobic', sans-serif;
+}
+
+.panel-custom {
+    background-color: grey;
+    color: white;
+}
+.panel-heading {
+    font-family: 'Metrophobic', sans-serif;
+}
+
+table {
+    margin: 0 auto;
+    font-family: 'Metrophobic', sans-serif;
+}
+
+.form-group {
+    font-family: 'Metrophobic', sans-serif;
+}
+
+th {
+    margin: 1% 1% 0 1%;
+    padding: 3% 3% 0 3%;
+    width: 1%;
+}
+
+hr {
+    margin: 1%;
+}
+
+td {
+    margin: 1% 1% 0 1%;
+    padding: 3% 3% 0 3%;
+    width: 1%;
+}
+
+h1 img {
+    width: 25%;
+    padding-bottom: 1%;
+}
+
+
+
+.form-control:focus {
+    border-color: #141f3d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #141f3d;
+}
