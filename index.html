@@ -19,20 +19,20 @@
 </head>
 
 <body>
-   
 
-    <!-- Main Header -->
+
+    <!-- Main Header area -->
     <div class="container" id="head-container">
         <div class="jumbotron" id="head">
             <h1><img src="assets/images/Lametro.svg"></h1>
             <h3>Los Angeles Metro Schedule</h3>
         </div>
-        <!-- end Main Header -->
     </div>
 
     <!-- Main Body Container -->
     <div class="container">
-        <!-- Train Schedule Panel -->
+
+        <!-- Train Schedule -->
         <div class="panel panel-default">
             <div class="panel-heading panel-custom">
                 Current Train Schedule
@@ -41,17 +41,16 @@
                 <tr>
                     <th scope="col">Train Name</th>
                     <th scope="col">Destination</th>
-                    <th scope="col">Frequency (min)</th>
+                    <th scope="col">Frequency(Minutes)</th>
                     <th scrope="col">Minutes Away</th>
                     <th scope="col">Next Arrival</th>
                 </tr>
                 <tbody id="table-data"></tbody>
             </table>
             <hr />
-            <!-- end Train Schedule Panel -->
         </div>
 
-        <!-- Add Train Panel -->
+        <!-- Add Train form area -->
         <div class="panel panel-default">
             <div class="panel-heading panel-custom">
                 Add Train
@@ -67,11 +66,11 @@
                         <input type="text" class="form-control" id="train-destination" required>
                     </div>
                     <div class="form-group">
-                        <label for="startYear">First Train Time (military time) </label>
+                        <label for="startYear">First Train Time(24:00) </label>
                         <input type="text" class="form-control" placeholder="HH:MM" id="train-time" required>
                     </div>
                     <div class="form-group">
-                        <label for="endYear">Frequency (min)</label>
+                        <label for="endYear">Frequency(Minutes)</label>
                         <input type="text" class="form-control" id="time-freq">
                     </div>
                     <div class="btn-group" role="group">
@@ -79,7 +78,6 @@
                     </div>
                 </form>
             </div>
-            <!-- end Add Train Panel -->
         </div>
 
     </div>

@@ -1,4 +1,4 @@
-// Global Variables
+// Variables
 var trainName = "";
 var trainDestination = "";
 var trainTime = "";
@@ -6,17 +6,17 @@ var trainFrequency = "";
 var nextArrival = "";
 var minutesAway = "";
 
-// jQuery global variables
-var elTrain = $("#train-name");
-var elTrainDestination = $("#train-destination");
+// Creating variable to the get the value entered by the user
+var eTrain = $("#train-name");
+var eTrainDestination = $("#train-destination");
 // form validation for Time using jQuery Mask plugin
-var elTrainTime = $("#train-time").mask("00:00");
-var elTimeFreq = $("#time-freq").mask("00");
+var eTrainTime = $("#train-time").mask("00:00");
+var eTimeFreq = $("#time-freq").mask("00");
 
 
 // Initialize Firebase
 var config = {
-    apiKey: config.MY_KEY,
+    apiKey: config.MY_KEY, //storing my key in a file(config.js) which is in .gitignore.
     authDomain: "train-schedule-baee4.firebaseapp.com",
     databaseURL: "https://train-schedule-baee4.firebaseio.com",
     projectId: "train-schedule-baee4",
@@ -25,31 +25,30 @@ var config = {
   };
   firebase.initializeApp(config);
 
-// Assign the reference to the database to a variable named 'database'
 var database = firebase.database();
 
 database.ref("/trains").on("child_added", function(snapshot) {
 
-    //  create local variables to store the data from firebase
+    //  create variables to store the data from firebase
     var trainDiff = 0;
     var trainRemainder = 0;
     var minutesTillArrival = "";
     var nextTrainTime = "";
     var frequency = snapshot.val().frequency;
 
-    // compute the difference in time from 'now' and the first train using UNIX timestamp, store in var and convert to minutes
+  // find the difference in time between current time & when the first train
     trainDiff = moment().diff(moment.unix(snapshot.val().time), "minutes");
 
-    // get the remainder of time by using 'moderator' with the frequency & time difference, store in var
+    // get the remainder of time with the frequency & time difference and store in a variable
     trainRemainder = trainDiff % frequency;
 
-    // subtract the remainder from the frequency, store in var
+    // subtract the remainder from the frequency, store in variable
     minutesTillArrival = frequency - trainRemainder;
 
     // add minutesTillArrival to now, to find next train & convert to standard time format
     nextTrainTime = moment().add(minutesTillArrival, "m").format("hh:mm A");
 
-    // append to our table of trains, inside tbody, with a new row of the train data
+    // append to table of trains, inside tbody, with a new row of the train data
     $("#table-data").append(
         "<tr><td>" + snapshot.val().name + "</td>" +
         "<td>" + snapshot.val().destination + "</td>" +
@@ -58,23 +57,6 @@ database.ref("/trains").on("child_added", function(snapshot) {
         "<td>" + nextTrainTime + "  "  + "</td></tr>"
     );
 
-    $("span").hide();
-
-    // Hover view of delete button
-    $("tr").hover(
-        function() {
-            $(this).find("span").show();
-        },
-        function() {
-            $(this).find("span").hide();
-        });
-
-    // STARTED BONUS TO REMOVE ITEMS ** not finished **
-    $("#table-data").on("click", "tr span", function() {
-        console.log(this);
-        var trainRef = database.ref("/trains/");
-        console.log(trainRef);
-    });
 });
 
 // function to call the button event, and store the values in the input form
@@ -83,13 +65,13 @@ var storeInputs = function(event) {
     event.preventDefault();
 
     // get & store input values
-    trainName = elTrain.val().trim();
-    trainDestination = elTrainDestination.val().trim();
-    trainTime = moment(elTrainTime.val().trim(), "HH:mm").subtract(1, "years").format("X");
-    trainFrequency = elTimeFreq.val().trim();
+    trainName = eTrain.val().trim();
+    trainDestination = eTrainDestination.val().trim();
+    trainTime = moment(eTrainTime.val().trim(), "HH:mm").subtract(1, "years").format("X");
+    trainFrequency = eTimeFreq.val().trim();
 
-    // add to firebase databse
-    database.ref("/trains").push({
+    // add the firebase db
+    database.ref("trains").push({
         name: trainName,
         destination: trainDestination,
         time: trainTime,
@@ -99,36 +81,23 @@ var storeInputs = function(event) {
         date_added: firebase.database.ServerValue.TIMESTAMP
     });
 
-    //  alert that train was added
+    //  console log when a train is added
     console.log("Train successuflly added!");
 
-    //  empty form once submitted
-    elTrain.val("");
-    elTrainDestination.val("");
-    elTrainTime.val("");
-    elTimeFreq.val("");
+    //  empty the form once submitted
+    eTrain.val("");
+    eTrainDestination.val("");
+    eTrainTime.val("");
+    eTimeFreq.val("");
 };
 
-// Calls storeInputs function if submit button clicked
+// Call the storeInputs function when the user clicks on the submit button
 $("#btn-add").on("click", function(event) {
     // form validation - if empty - alert
-    if (elTrain.val().length === 0 || elTrainDestination.val().length === 0 || elTrainTime.val().length === 0 || elTimeFreq === 0) {
+    if (eTrain.val().length === 0 || eTrainDestination.val().length === 0 || eTrainTime.val().length === 0 || eTimeFreq === 0) {
         alert("Please Fill All Required Fields");
     } else {
         // if form is filled out, run function
         storeInputs(event);
-    }
-});
-
-// Calls storeInputs function if enter key is clicked
-$('form').on("keypress", function(event) {
-    if (event.which === 13) {
-        // form validation - if empty - alert
-        if (elTrain.val().length === 0 || elTrainDestination.val().length === 0 || elTrainTime.val().length === 0 || elTimeFreq === 0) {
-            alert("Please Fill All Required Fields");
-        } else {
-            // if form is filled out, run function
-            storeInputs(event);
-        }
     }
 });
